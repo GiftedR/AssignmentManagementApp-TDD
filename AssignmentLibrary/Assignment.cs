@@ -7,15 +7,13 @@ public class Assignment
 
     public Assignment(string title, string description)
     {
-        Validate(title, nameof(title));
-        Validate(description, nameof(description));
-
-        Title = title;
-        Description = description;
+        Update(title, description);
     }
 
     public void Update(string newTitle, string newDescription)
     {
+        Validate(newTitle, nameof(newTitle));
+        Validate(newDescription, nameof(newDescription));
         // BUG: Missing validation here
         Title = newTitle;
         Description = newDescription;
