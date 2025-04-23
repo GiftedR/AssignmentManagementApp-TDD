@@ -1,7 +1,7 @@
-# AssignmentManagementApp-Week2
+# AssignmentManagementApp-Week3
 
 Failing and Passing Screenshots are in "Documentation" folder
 
-[Failing](/Documentation/FailingTests.png)
+[Failing](/Documentation/)
 
-[Passing](/Documentation/PassingTests.png)
+[Passing](/Documentation/)
