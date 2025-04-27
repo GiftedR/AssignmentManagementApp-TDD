@@ -45,10 +45,9 @@ public class AssignmentServiceTests
 		var duplicateassignment = new Assignment("Lab 1", "TDD examples in the real world");
 
 		service.AddAssignment(assignment);
-		service.AddAssignment(duplicateassignment);
 
 		Assert.Contains(assignment, service.ListAll());
-		Assert.DoesNotContain(duplicateassignment, service.ListAll());
+		Assert.Throws<InvalidDataException>(() => service.AddAssignment(duplicateassignment));
 	}
 
 	[Fact]
@@ -84,6 +83,9 @@ public class AssignmentServiceTests
 		var incompleteassignment2 = new Assignment("Second Assignment", "Flow Controls");
 		var incompleteassignment3 = new Assignment("Third Assignment", "Classes");
 		var incompleteassignment4 = new Assignment("Fourth Assignment", "Lambdas");
+
+		completeassignment1.MarkComplete();
+		completeassignment2.MarkComplete();
 
 		service.AddAssignment(incompleteassignment1);
 		service.AddAssignment(incompleteassignment2);
