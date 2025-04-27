@@ -25,4 +25,13 @@ public class AssignmentTests
         var assignment = new Assignment("Read Chapter 2", "Summarize key points");
         Assert.Throws<ArgumentException>(() => assignment.Update("Valid title", ""));
     }
+    [Fact]
+    public void MarkComplete_ShouldMarkCompleted()
+    {
+        var assignment = new Assignment("Week 3 TDD", "Introducing AssignmentService and Filtering with TDD");
+        
+        assignment.MarkComplete();
+
+        Assert.True(assignment.IsCompleted);
+    }
 }
