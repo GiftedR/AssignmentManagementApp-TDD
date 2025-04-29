@@ -1,7 +1,4 @@
-# AssignmentManagementApp-Week3
+# AssignmentManagementApp-TDD
 
-Failing and Passing Screenshots are in "Documentation" folder
+Week is in branches
 
-[Failing](/Documentation/)
-
-[Passing](/Documentation/)

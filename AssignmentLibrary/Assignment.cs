@@ -4,6 +4,7 @@ public class Assignment
 {
     public string Title { get; private set; }
     public string Description { get; private set; }
+    public bool IsCompleted { get; private set; }
 
     public Assignment(string title, string description)
     {
@@ -23,5 +24,10 @@ public class Assignment
     {
         if (string.IsNullOrWhiteSpace(input))
             throw new ArgumentException($"{fieldName} cannot be blank or whitespace.");
+    }
+
+    public void MarkComplete()
+    {
+        IsCompleted = true;
     }
 }
