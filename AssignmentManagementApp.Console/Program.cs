@@ -1,9 +1,21 @@
-﻿using System;
+﻿using AssignmentLibrary;
+using AssignmentManagementApp.UI;
 
-public class Program
+using System;
+using Microsoft.Extensions.DependencyInjection;
+
+class Program
 {
 	public static void Main(string[] args)
 	{
-		Console.WriteLine("Hello World");
+		ServiceCollection services = new();
+
+		services.AddSingleton<AssignmentService>();
+		services.AddSingleton<ConsoleUI>();
+
+		ServiceProvider serviceProvider = services.BuildServiceProvider();
+		ConsoleUI consoleUI = serviceProvider.GetRequiredService<ConsoleUI>();
+
+		consoleUI.Run();
 	}
 }

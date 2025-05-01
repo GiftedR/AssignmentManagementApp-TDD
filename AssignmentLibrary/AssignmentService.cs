@@ -10,13 +10,14 @@ public class AssignmentService
 	}
 
 	// Create Assignment
-	public void AddAssignment(Assignment assignment)
+	public bool AddAssignment(Assignment assignment)
 	{
 		if (Contains(assignment))
 		{
 			throw new InvalidDataException("Cannot have duplicate Assignments");
 		} else {
 			Assignments.Add(assignment);
+			return true;
 		}
 	}
 

@@ -30,4 +30,9 @@ public class Assignment
     {
         IsCompleted = true;
     }
+
+    public override string ToString()
+    {
+        return $"{Title}: {Description} (Completed: {IsCompleted})";
+    }
 }
