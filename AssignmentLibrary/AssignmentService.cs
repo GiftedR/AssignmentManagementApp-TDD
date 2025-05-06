@@ -1,6 +1,8 @@
+using AssignmentLibrary.Interfaces;
+
 namespace AssignmentLibrary;
 
-public class AssignmentService
+public class AssignmentService : IAssignmentService
 {
 	private List<Assignment> Assignments = new List<Assignment>();
 
