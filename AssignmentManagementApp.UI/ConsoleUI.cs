@@ -54,7 +54,7 @@ Assignment Manager Menu:
 					SearchAssignmentByTitle();
 					break;
 				case "6":
-					updateAssignment();
+					UpdateAssignment();
 					break;
 				case "7":
 					DeleteAssignment();
@@ -138,7 +138,7 @@ Assignment Manager Menu:
 		}
 	}
 
-	private void updateAssignment()
+	private void UpdateAssignment()
 	{
 		string enteredOldTitle = CustomConsole.ReadInput("Enter the current title of the Assignment: ");
 		string enteredNewTitle = CustomConsole.ReadInput("Enter the new title of the Assignment: ");
