@@ -3,6 +3,7 @@ using AssignmentManagementApp.UI;
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using AssignmentLibrary.Interfaces;
 
 class Program
 {
@@ -10,7 +11,7 @@ class Program
 	{
 		ServiceCollection services = new();
 
-		services.AddSingleton<AssignmentService>();
+		services.AddSingleton<IAssignmentService, AssignmentService>();
 		services.AddSingleton<ConsoleUI>();
 
 		ServiceProvider serviceProvider = services.BuildServiceProvider();
