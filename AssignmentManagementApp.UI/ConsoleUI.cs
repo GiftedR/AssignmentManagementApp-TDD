@@ -1,13 +1,14 @@
 ﻿using System.Drawing;
 using AssignmentLibrary;
+using AssignmentLibrary.Interfaces;
 
 namespace AssignmentManagementApp.UI;
 
 public class ConsoleUI
 {
-	private AssignmentService _assignmentService;
+	private IAssignmentService _assignmentService;
 
-	public ConsoleUI(AssignmentService assignmentservice)
+	public ConsoleUI(IAssignmentService assignmentservice)
 	{
 		_assignmentService = assignmentservice;
 	}

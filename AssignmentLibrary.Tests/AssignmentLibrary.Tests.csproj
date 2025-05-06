@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../AssignmentManagementApp.UI/AssignmentManagementApp.UI.csproj" />
     <ProjectReference Include="..\AssignmentLibrary\AssignmentLibrary.csproj" />
   </ItemGroup>
 
