@@ -1,0 +1,6 @@
+@WebAPITestASPNETCore_HostAddress = http://localhost:5101
+
+GET {{WebAPITestASPNETCore_HostAddress}}/api/
+Accept: application/json
+
+###
