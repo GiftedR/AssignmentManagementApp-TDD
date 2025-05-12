@@ -2,8 +2,8 @@ namespace AssignmentLibrary;
 
 public class Assignment
 {
-    public string Title { get; private set; }
-    public string Description { get; private set; }
+    public string Title { get; private set; } = default!;
+    public string Description { get; private set; } = default!;
     public bool IsCompleted { get; private set; }
 
     public Assignment(string title, string description)
