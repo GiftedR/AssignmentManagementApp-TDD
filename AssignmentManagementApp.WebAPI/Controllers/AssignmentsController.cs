@@ -18,7 +18,9 @@ namespace AssignmentManagementApp.WebAPI.Controllers
 
 		[HttpGet]
 		public IActionResult GetAll() => Ok(_assignmentService.ListAll());
-		[HttpGet("{title}")]
+		[HttpGet("incomplete")]
+		public IActionResult GetIncomplete() => Ok(_assignmentService.ListIncomplete());
+		[HttpGet("one/{title}")]
 		public IActionResult GetOneByTitle(string title) => OkOrBad(_assignmentService.FindAssignmentByTitle(title));
 		[HttpPut("{title}")]
 		public IActionResult UpdateOneByTitle(string title, Assignment newassignment) => OkOrBad(_assignmentService.UpdateAssigment(title, newassignment.Title, newassignment.Description), false);
