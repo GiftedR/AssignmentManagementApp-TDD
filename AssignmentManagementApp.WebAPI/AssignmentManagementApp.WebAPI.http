@@ -1,0 +1,6 @@
+@AssignmentManagementApp.WebAPI_HostAddress = http://localhost:5018
+
+GET {{AssignmentManagementApp.WebAPI_HostAddress}}/api/
+Accept: application/json
+
+###
