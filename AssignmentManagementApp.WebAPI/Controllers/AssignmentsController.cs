@@ -7,11 +7,11 @@ namespace AssignmentManagementApp.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class AssignmentController : ControllerBase
+	public class AssignmentsController : ControllerBase
 	{
 		public readonly IAssignmentService _assignmentService;
 
-		public AssignmentController(IAssignmentService assignmentservice)
+		public AssignmentsController(IAssignmentService assignmentservice)
 		{
 			_assignmentService = assignmentservice;
 		}
