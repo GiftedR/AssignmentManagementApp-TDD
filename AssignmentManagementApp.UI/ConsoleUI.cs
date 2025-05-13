@@ -7,6 +7,7 @@ namespace AssignmentManagementApp.UI;
 public class ConsoleUI
 {
 	private IAssignmentService _assignmentService;
+	public bool isRunning = true;
 
 	public ConsoleUI(IAssignmentService assignmentservice)
 	{
@@ -26,7 +27,6 @@ Assignment Manager Menu:
 	7. Delete Assignment
 	0. Exit
 ";
-		bool isRunning = true;
 		string input = "";
 		do
 		{
