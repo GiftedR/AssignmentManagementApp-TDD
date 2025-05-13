@@ -34,6 +34,6 @@ public class Assignment
 
     public override string ToString()
     {
-        return $"{Title}: {Description} (Completed: {IsCompleted})";
+        return $"[{Id}]: {Title}, {Description} (Completed: {IsCompleted})";
     }
 }

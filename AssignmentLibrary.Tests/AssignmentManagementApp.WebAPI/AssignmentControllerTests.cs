@@ -157,6 +157,31 @@ public class AssignmentControllerTests : IClassFixture<WebApplicationFactory<Pro
 			Assert.False(retrievedAssi.IsCompleted);
 		});
 	}
+	[Fact]
+	public async Task GivenMultipleAssignments_ShouldReturnFoundAssignmentByTitle()
+	{
+		string searchTitle = "Search me (:";
+
+		StringContent postAssignment = new(JsonSerializer.Serialize(
+			new Assignment(searchTitle, "Make a fancy looking title")), 
+				Encoding.UTF8, "application/json"
+			);
+		
+		HttpResponseMessage createResponse = await _client.PostAsync("/api/Assignments", postAssignment);
+		createResponse.EnsureSuccessStatusCode();
+
+		HttpResponseMessage getResponse = await _client.GetAsync($"/api/Assignments/one/{searchTitle}");
+		getResponse.EnsureSuccessStatusCode();
+
+		string json = await getResponse.Content.ReadAsStringAsync();
+		Assignment? assignment = JsonSerializer.Deserialize<Assignment>(json, new JsonSerializerOptions
+		{
+			PropertyNameCaseInsensitive = true
+		});
+
+		Assert.NotNull(assignment);
+		Assert.Equal(assignment.Title, searchTitle);
+	}
 
 	[Fact]
 	public async Task GivenOldAssignmentAndNewAssignment_ShouldUpdateAssignment()
@@ -241,6 +266,38 @@ public class AssignmentControllerTests : IClassFixture<WebApplicationFactory<Pro
 		Assert.NotNull(assignments);
 		Assert.Contains(assignments, assi => assi.Title == originalTitle);
 		Assert.Contains(assignments, assi => assi.Description == originalDescription);
+		Assert.Equal(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest).StatusCode, updateResponse.StatusCode);
+	}
+
+	[Fact]
+	public async Task GivenNoAssignment_ShouldNotUpdateAssignment()
+	{
+		string newTitle = "OOO, this shouldnt exist";
+		string newDescription = "I shouldnt be here (:";
+
+		StringContent updateAssignmentJson = new(
+			JsonSerializer.Serialize(new Assignment(
+				newTitle,
+				newDescription
+			)),
+			Encoding.UTF8, "application/json"
+		);
+
+		HttpResponseMessage updateResponse = await _client.PutAsync($"/api/Assignments/{newTitle}", updateAssignmentJson);
+		// updateResponse.EnsureSuccessStatusCode();
+		
+		HttpResponseMessage getResponse = await _client.GetAsync("/api/Assignments");
+		getResponse.EnsureSuccessStatusCode();
+
+		string json = await getResponse.Content.ReadAsStringAsync();
+		IEnumerable<Assignment>? assignments = JsonSerializer.Deserialize<List<Assignment>>(json, new JsonSerializerOptions
+		{
+			PropertyNameCaseInsensitive = true
+		});
+
+		Assert.NotNull(assignments);
+		Assert.DoesNotContain(assignments, assi => assi.Title == newTitle);
+		Assert.DoesNotContain(assignments, assi => assi.Description == newDescription);
 		Assert.Equal(new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest).StatusCode, updateResponse.StatusCode);
 	}
 

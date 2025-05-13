@@ -19,10 +19,10 @@ public class AssignmentServiceTests
 	[Fact]
 	public void ListAll_ThreeAssignments_ShouldListAllThreeAssignments()
 	{
-		var service = new AssignmentService(testFormatter, testLogger);
-		var assignment1 = new Assignment("First Assignment", "Variables");
-		var assignment2 = new Assignment("Second Assignment", "Flow Controls");
-		var assignment3 = new Assignment("Third Assignment", "Classes");
+		AssignmentService service = new(testFormatter, testLogger);
+		Assignment assignment1 = new("First Assignment", "Variables");
+		Assignment assignment2 = new("Second Assignment", "Flow Controls");
+		Assignment assignment3 = new("Third Assignment", "Classes");
 
 		assignment2.MarkComplete();
 
@@ -37,8 +37,8 @@ public class AssignmentServiceTests
 	[Fact]
 	public void AddAssignment_ValidInput_ShouldAddAssignment()
 	{
-		var service = new AssignmentService(testFormatter, testLogger);
-		var assignment = new Assignment("Lab 1", "TDD examples in the real world");
+		AssignmentService service = new(testFormatter, testLogger);
+		Assignment assignment = new("Lab 1", "TDD examples in the real world");
 
 		service.AddAssignment(assignment);
 
@@ -47,9 +47,9 @@ public class AssignmentServiceTests
 	[Fact]
 	public void AddAssignment_DuplicateAssignment_ShouldNotAdd()
 	{
-		var service = new AssignmentService(testFormatter, testLogger);
-		var assignment = new Assignment("Lab 1", "TDD examples in the real world");
-		var duplicateassignment = new Assignment("Lab 1", "TDD examples in the real world");
+		AssignmentService service = new(testFormatter, testLogger);
+		Assignment assignment = new("Lab 1", "TDD examples in the real world");
+		Assignment duplicateassignment = new("Lab 1", "TDD examples in the real world");
 
 		service.AddAssignment(assignment);
 
@@ -60,10 +60,10 @@ public class AssignmentServiceTests
 	[Fact]
 	public void ListIncomplete_ThreeIncompleteAssignments_ShouldListThreeIncompleteAssignments()
 	{
-		var service = new AssignmentService(testFormatter, testLogger);
-		var incompleteassignment1 = new Assignment("First Assignment", "Variables");
-		var incompleteassignment2 = new Assignment("Second Assignment", "Flow Controls");
-		var incompleteassignment3 = new Assignment("Third Assignment", "Classes");
+		AssignmentService service = new(testFormatter, testLogger);
+		Assignment incompleteassignment1 = new("First Assignment", "Variables");
+		Assignment incompleteassignment2 = new("Second Assignment", "Flow Controls");
+		Assignment incompleteassignment3 = new("Third Assignment", "Classes");
 
 		service.AddAssignment(incompleteassignment1);
 		service.AddAssignment(incompleteassignment2);
@@ -76,20 +76,20 @@ public class AssignmentServiceTests
 	[Fact]
 	public void ListIncomplete_Empty_ShouldListNoAssignments()
 	{
-		var service = new AssignmentService(testFormatter, testLogger);
+		AssignmentService service = new(testFormatter, testLogger);
 
 		Assert.Empty(service.ListIncomplete());
 	}
 	[Fact]
 	public void ListIncomplete_TwoCompleteFourIncomplete_ShouldListFourIncompleteAssignments()
 	{
-		var service = new AssignmentService(testFormatter, testLogger);
-		var completeassignment1 = new Assignment("Attendance", "Did you show up for the first week?");
-		var completeassignment2 = new Assignment("Syllabus Quiz", "Did you read the syllabus?");
-		var incompleteassignment1 = new Assignment("First Assignment", "Variables");
-		var incompleteassignment2 = new Assignment("Second Assignment", "Flow Controls");
-		var incompleteassignment3 = new Assignment("Third Assignment", "Classes");
-		var incompleteassignment4 = new Assignment("Fourth Assignment", "Lambdas");
+		AssignmentService service = new(testFormatter, testLogger);
+		Assignment completeassignment1 = new("Attendance", "Did you show up for the first week?");
+		Assignment completeassignment2 = new("Syllabus Quiz", "Did you read the syllabus?");
+		Assignment incompleteassignment1 = new("First Assignment", "Variables");
+		Assignment incompleteassignment2 = new("Second Assignment", "Flow Controls");
+		Assignment incompleteassignment3 = new("Third Assignment", "Classes");
+		Assignment incompleteassignment4 = new("Fourth Assignment", "Lambdas");
 
 		completeassignment1.MarkComplete();
 		completeassignment2.MarkComplete();
@@ -108,5 +108,40 @@ public class AssignmentServiceTests
 		Assert.DoesNotContain(completeassignment1, service.ListIncomplete());
 		Assert.DoesNotContain(completeassignment2, service.ListIncomplete());
 	}
+	[Fact]
+	public void MarkAssignmentComplete_ShouldMarkAssignmentComplete()
+	{
+		AssignmentService service = new(testFormatter, testLogger);
+		Assignment completeassignment1 = new("Attendance", "Did you show up for the first week?");
+		Assignment completeassignment2 = new("Syllabus Quiz", "Did you read the syllabus?");
+		Assignment incompleteassignment1 = new("First Assignment", "Variables");
+		Assignment incompleteassignment2 = new("Second Assignment", "Flow Controls");
+		Assignment incompleteassignment3 = new("Third Assignment", "Classes");
+		Assignment incompleteassignment4 = new("Fourth Assignment", "Lambdas");
 
+		service.AddAssignment(incompleteassignment1);
+		service.AddAssignment(incompleteassignment2);
+		service.AddAssignment(incompleteassignment3);
+		service.AddAssignment(incompleteassignment4);
+		service.AddAssignment(completeassignment1);
+		service.AddAssignment(completeassignment2);
+		
+		service.MarkAssignmentComplete(completeassignment1.Title);
+		service.MarkAssignmentComplete(completeassignment2.Title);
+		
+		Assert.Contains(incompleteassignment1, service.ListIncomplete());
+		Assert.Contains(incompleteassignment2, service.ListIncomplete());
+		Assert.Contains(incompleteassignment3, service.ListIncomplete());
+		Assert.Contains(incompleteassignment4, service.ListIncomplete());
+		Assert.DoesNotContain(completeassignment1, service.ListIncomplete());
+		Assert.DoesNotContain(completeassignment2, service.ListIncomplete());
+	}
+
+	[Fact]
+	public void MarkAssignmentComplete_NonExistantAssignment_ShouldNotMarkComplete()
+	{
+		AssignmentService service = new(testFormatter, testLogger);
+		
+		Assert.False(service.MarkAssignmentComplete("No Assignment (:"));
+	}
 }

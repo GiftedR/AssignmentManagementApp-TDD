@@ -34,4 +34,18 @@ public class AssignmentTests
 
         Assert.True(assignment.IsCompleted);
     }
+
+    [Fact]
+    public void ToString_ShouldFormatAsAString()
+    {
+        Assignment assignment = new(
+            "This is a Title",
+            "This is a description"
+        );
+        string expectString;
+
+        expectString = $"[{assignment.Id}]: {assignment.Title}, {assignment.Description} (Completed: {assignment.IsCompleted})";
+    
+        Assert.Equal(expectString, assignment.ToString());
+    }
 }
