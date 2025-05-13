@@ -1,0 +1,11 @@
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/Week6NoteApp.GeneratedMSBuildEditorConfig.editorconfig
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/Week6NoteApp.AssemblyInfoInputs.cache
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/Week6NoteApp.AssemblyInfo.cs
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/Week6NoteApp.csproj.CoreCompileInputs.cache
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/bin/Debug/net9.0/Week6NoteApp.deps.json
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/bin/Debug/net9.0/Week6NoteApp.dll
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/bin/Debug/net9.0/Week6NoteApp.pdb
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/Week6NoteApp.dll
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/refint/Week6NoteApp.dll
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/Week6NoteApp.pdb
+/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/obj/Debug/net9.0/ref/Week6NoteApp.dll

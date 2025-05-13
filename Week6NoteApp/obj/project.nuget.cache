@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "cFW0vINERHc=",
+  "success": true,
+  "projectFilePath": "/home/giftedr/Documents/VM/Shared/Visual_Studio/CodeAlongs/W6-Code_Along/Week6NoteApp/Week6NoteApp.csproj",
+  "expectedPackageFiles": [
+    "/home/giftedr/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.3/microsoft.aspnetcore.app.ref.9.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
