@@ -2,6 +2,7 @@ namespace AssignmentLibrary;
 
 public class Assignment
 {
+    public Guid Id { get; } = Guid.NewGuid();
     public string Title { get; private set; } = default!;
     public string Description { get; private set; } = default!;
     public bool IsCompleted { get; private set; }
