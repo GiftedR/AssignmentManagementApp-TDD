@@ -1,18 +1,25 @@
+using AssignmentLibrary.Interfaces;
+using AssignmentManagementApp.UI;
+using Castle.Core.Logging;
+
 namespace AssignmentLibrary.Tests;
 
 public class AssignmentServiceTests
 {
+	public IAppLogger testLogger = new ConsoleAppLogger();
+	public IAssignmentFormatter testFormatter = new AssignmentFormatter();
+
 	[Fact]
 	public void ListAll_NoAssignments_ShouldListNoAssignments()
 	{
-		var service = new AssignmentService();
+		var service = new AssignmentService(testFormatter, testLogger);
 
 		Assert.Empty(service.ListAll());
 	}
 	[Fact]
 	public void ListAll_ThreeAssignments_ShouldListAllThreeAssignments()
 	{
-		var service = new AssignmentService();
+		var service = new AssignmentService(testFormatter, testLogger);
 		var assignment1 = new Assignment("First Assignment", "Variables");
 		var assignment2 = new Assignment("Second Assignment", "Flow Controls");
 		var assignment3 = new Assignment("Third Assignment", "Classes");
@@ -30,7 +37,7 @@ public class AssignmentServiceTests
 	[Fact]
 	public void AddAssignment_ValidInput_ShouldAddAssignment()
 	{
-		var service = new AssignmentService();
+		var service = new AssignmentService(testFormatter, testLogger);
 		var assignment = new Assignment("Lab 1", "TDD examples in the real world");
 
 		service.AddAssignment(assignment);
@@ -40,7 +47,7 @@ public class AssignmentServiceTests
 	[Fact]
 	public void AddAssignment_DuplicateAssignment_ShouldNotAdd()
 	{
-		var service = new AssignmentService();
+		var service = new AssignmentService(testFormatter, testLogger);
 		var assignment = new Assignment("Lab 1", "TDD examples in the real world");
 		var duplicateassignment = new Assignment("Lab 1", "TDD examples in the real world");
 
@@ -53,7 +60,7 @@ public class AssignmentServiceTests
 	[Fact]
 	public void ListIncomplete_ThreeIncompleteAssignments_ShouldListThreeIncompleteAssignments()
 	{
-		var service = new AssignmentService();
+		var service = new AssignmentService(testFormatter, testLogger);
 		var incompleteassignment1 = new Assignment("First Assignment", "Variables");
 		var incompleteassignment2 = new Assignment("Second Assignment", "Flow Controls");
 		var incompleteassignment3 = new Assignment("Third Assignment", "Classes");
@@ -69,14 +76,14 @@ public class AssignmentServiceTests
 	[Fact]
 	public void ListIncomplete_Empty_ShouldListNoAssignments()
 	{
-		var service = new AssignmentService();
+		var service = new AssignmentService(testFormatter, testLogger);
 
 		Assert.Empty(service.ListIncomplete());
 	}
 	[Fact]
 	public void ListIncomplete_TwoCompleteFourIncomplete_ShouldListFourIncompleteAssignments()
 	{
-		var service = new AssignmentService();
+		var service = new AssignmentService(testFormatter, testLogger);
 		var completeassignment1 = new Assignment("Attendance", "Did you show up for the first week?");
 		var completeassignment2 = new Assignment("Syllabus Quiz", "Did you read the syllabus?");
 		var incompleteassignment1 = new Assignment("First Assignment", "Variables");
