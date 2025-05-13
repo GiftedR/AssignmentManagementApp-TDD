@@ -11,6 +11,8 @@ class Program
 	{
 		ServiceCollection services = new();
 
+        services.AddSingleton<IAssignmentFormatter, AssignmentFormatter>();
+        services.AddSingleton<IAppLogger, ConsoleAppLogger>();
 		services.AddSingleton<IAssignmentService, AssignmentService>();
 		services.AddSingleton<ConsoleUI>();
 

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../AssignmentLibrary/AssignmentLibrary.csproj" />
+    <ProjectReference Include="../AssignmentManagementApp.UI/AssignmentManagementApp.UI.csproj" />
   </ItemGroup>
 
 </Project>
