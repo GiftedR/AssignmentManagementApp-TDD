@@ -1,6 +1,7 @@
 using AssignmentLibrary.Interfaces;
 using AssignmentManagementApp.UI;
 using Castle.Core.Logging;
+using Moq;
 
 namespace AssignmentLibrary.Tests;
 
@@ -143,5 +144,50 @@ public class AssignmentServiceTests
 		AssignmentService service = new(testFormatter, testLogger);
 		
 		Assert.False(service.MarkAssignmentComplete("No Assignment (:"));
+	}
+
+	[Fact]
+	public void AddAssignment_ShouldCallLogger()
+	{
+		Mock<IAppLogger> moqLogger = new();
+		moqLogger.Setup(method => method.Log(It.IsAny<string>())).Verifiable();
+		
+		AssignmentService service = new(testFormatter, moqLogger.Object);
+		service.AddAssignment(new Assignment("Bogus Bintend", "We binting those bogos!"));
+
+		moqLogger.Verify(method => method.Log(It.IsAny<string>()), Times.AtLeastOnce());
+	}
+	[Fact]
+	public void DeleteAssignment_ShouldCallLogger()
+	{
+		Mock<IAppLogger> moqLogger = new();
+		moqLogger.Setup(method => method.Log(It.IsAny<string>())).Verifiable();
+		
+		AssignmentService service = new(testFormatter, moqLogger.Object);
+		service.DeleteAssignment("Bogus Bintend");
+
+		moqLogger.Verify(method => method.Log(It.IsAny<string>()), Times.AtLeastOnce());
+	}
+	[Fact]
+	public void UpdateAssigment_ShouldCallLogger()
+	{
+		Mock<IAppLogger> moqLogger = new();
+		moqLogger.Setup(method => method.Log(It.IsAny<string>())).Verifiable();
+		
+		AssignmentService service = new(testFormatter, moqLogger.Object);
+		service.UpdateAssigment("Bogus Bintend", "Hey, was wondering if you got those photos printed?", "Bogos Binted? What?");
+
+		moqLogger.Verify(method => method.Log(It.IsAny<string>()), Times.AtLeastOnce());
+	}
+	[Fact]
+	public void MarkAssignmentComplete_ShouldCallLogger()
+	{
+		Mock<IAppLogger> moqLogger = new();
+		moqLogger.Setup(method => method.Log(It.IsAny<string>())).Verifiable();
+		
+		AssignmentService service = new(testFormatter, moqLogger.Object);
+		service.MarkAssignmentComplete("Bogus Bintend");
+
+		moqLogger.Verify(method => method.Log(It.IsAny<string>()), Times.AtLeastOnce());
 	}
 }
