@@ -18,4 +18,6 @@ When building tests for the console, if the input was invalid, it would get stuc
 
 ![Swagger Get All](Documentation/Week6/SwaggerGetAll.png)
 
+![Test Passing and Code Coverage](Documentation/Week6/TestCoverage.png)
+
 ---
