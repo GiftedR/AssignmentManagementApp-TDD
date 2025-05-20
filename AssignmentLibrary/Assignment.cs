@@ -1,3 +1,5 @@
+using static AssignmentLibrary.Enumerations;
+
 namespace AssignmentLibrary;
 
 public class Assignment
@@ -6,10 +8,12 @@ public class Assignment
     public string Title { get; private set; } = default!;
     public string Description { get; private set; } = default!;
     public bool IsCompleted { get; private set; }
+    public Priority Priority { get; private set; }
 
-    public Assignment(string title, string description)
+    public Assignment(string title, string description, Priority priority = Priority.Medium)
     {
         Update(title, description);
+        Priority = priority;
     }
 
     public void Update(string newTitle, string newDescription)

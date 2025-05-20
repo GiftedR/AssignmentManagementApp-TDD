@@ -1,6 +1,6 @@
 namespace AssignmentLibrary;
 
-class Enumerations
+public class Enumerations
 {
 	public enum Priority
 	{
