@@ -1,5 +1,6 @@
 using Xunit;
 using AssignmentLibrary;
+using static AssignmentLibrary.Enumerations;
 
 namespace AssignmentLibrary.Tests;
 
@@ -20,6 +21,13 @@ public class AssignmentTests
     }
 
     [Fact]
+    public void Constructor_ShouldHaveDefaultPriority()
+    {
+        Assignment assignment = new("Medium Priority", "Medium Priority Assignment");
+        Assert.Equal(Priority.Medium, assignment.Priority);
+    }
+
+    [Fact]
     public void Update_BlankDescription_ShouldThrowException()
     {
         var assignment = new Assignment("Read Chapter 2", "Summarize key points");
@@ -29,7 +37,7 @@ public class AssignmentTests
     public void MarkComplete_ShouldMarkCompleted()
     {
         var assignment = new Assignment("Week 3 TDD", "Introducing AssignmentService and Filtering with TDD");
-        
+
         assignment.MarkComplete();
 
         Assert.True(assignment.IsCompleted);
@@ -45,7 +53,7 @@ public class AssignmentTests
         string expectString;
 
         expectString = $"[{assignment.Id}]: {assignment.Title}, {assignment.Description} (Completed: {assignment.IsCompleted})";
-    
+
         Assert.Equal(expectString, assignment.ToString());
     }
 }
