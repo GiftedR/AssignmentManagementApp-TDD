@@ -28,6 +28,13 @@ public class AssignmentTests
     }
 
     [Fact]
+    public void Constructor_HighPriority_ShouldSetPriorityToHigh()
+    {
+        Assignment assignment = new("High Priority", "High Priority Assignment", Priority.High);
+        Assert.Equal(Priority.High, assignment.Priority);
+    }
+
+    [Fact]
     public void Update_BlankDescription_ShouldThrowException()
     {
         var assignment = new Assignment("Read Chapter 2", "Summarize key points");
