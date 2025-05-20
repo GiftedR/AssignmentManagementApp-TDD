@@ -15,7 +15,7 @@ public class Assignment
 		Validate(title, nameof(title));
 		Validate(description, nameof(description));
 		Title = title;
-		Description = description
+		Description = description;
 		Priority = priority;
 	}
 
