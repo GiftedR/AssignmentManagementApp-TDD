@@ -71,7 +71,7 @@ public class AssignmentService : IAssignmentService
 			) return false;
 		
 		_logger.Log($"Assignment Updated: {_formatter.Format(updateAssignment)}\n With New Details: {newTitle}, {newDescription}");
-		updateAssignment.Update(new Assignment(newTitle, newDescription));
+		updateAssignment.Update(newTitle, newDescription);
 		return true;
 	}
 	// Delete Assignment
