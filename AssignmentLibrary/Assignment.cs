@@ -19,14 +19,14 @@ public class Assignment
 		Priority = priority;
 	}
 
-	public void Update(Assignment newassignment)
+	public void Update(string newtitle, string newdescription, Priority? newpriority = null)
 	{
-		Validate(newassignment.Title, nameof(newassignment.Title));
-		Validate(newassignment.Description, nameof(newassignment.Description));
-		// BUG: Missing validation here
-		Title = newassignment.Title;
-		Description = newassignment.Description;
-		Priority = newassignment.Priority;
+		Validate(newtitle, nameof(newtitle));
+		Validate(newdescription, nameof(newdescription));
+		Title = newtitle;
+		Description = newdescription;
+		if (newpriority != null)
+			Priority = (Priority)newpriority;
 	}
 
 	private void Validate(string input, string fieldName)

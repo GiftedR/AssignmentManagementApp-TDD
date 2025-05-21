@@ -38,7 +38,7 @@ public class AssignmentTests
     public void Update_BlankDescription_ShouldThrowException()
     {
         var assignment = new Assignment("Read Chapter 2", "Summarize key points");
-        Assert.Throws<ArgumentException>(() => assignment.Update(new Assignment("Valid title", "")));
+        Assert.Throws<ArgumentException>(() => assignment.Update("Valid title", ""));
     }
     [Fact]
     public void MarkComplete_ShouldMarkCompleted()
