@@ -1,4 +1,5 @@
 using AssignmentLibrary.Interfaces;
+using static AssignmentLibrary.Enumerations;
 
 namespace AssignmentLibrary;
 
@@ -58,7 +59,7 @@ public class AssignmentService : IAssignmentService
 		completeAssignment.MarkComplete();
 		return true;
 	}
-	public bool UpdateAssigment(string oldTitle, string newTitle, string newDescription)
+	public bool UpdateAssigment(string oldTitle, string newTitle, string newDescription, Priority? newPriority = null)
 	{
 		Assignment? updateAssignment = FindAssignmentByTitle(oldTitle);
 		if (updateAssignment == null) 
@@ -71,7 +72,7 @@ public class AssignmentService : IAssignmentService
 			) return false;
 		
 		_logger.Log($"Assignment Updated: {_formatter.Format(updateAssignment)}\n With New Details: {newTitle}, {newDescription}");
-		updateAssignment.Update(newTitle, newDescription);
+		updateAssignment.Update(newTitle, newDescription, newPriority);
 		return true;
 	}
 	// Delete Assignment

@@ -40,6 +40,15 @@ public class AssignmentTests
         var assignment = new Assignment("Read Chapter 2", "Summarize key points");
         Assert.Throws<ArgumentException>(() => assignment.Update("Valid title", ""));
     }
+
+    [Fact]
+    public void Update_NewPriority_ShouldUpdatePriority()
+    {
+        var assignment = new Assignment("Read Chapter 8", "Summarize key points");
+        assignment.Update("Read Chapter 8 & 9", "Summarize Both Chapters", Priority.High);
+
+        Assert.Equal(Priority.High, assignment.Priority);
+    }
     [Fact]
     public void MarkComplete_ShouldMarkCompleted()
     {

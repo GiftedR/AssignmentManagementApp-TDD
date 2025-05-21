@@ -2,6 +2,7 @@ using System;
 using AssignmentLibrary.Interfaces;
 using AssignmentManagementApp.UI;
 using Moq;
+using static AssignmentLibrary.Enumerations;
 
 namespace AssignmentLibrary.Tests;
 
@@ -60,14 +61,14 @@ public class ConsoleUITests
 		string oldTitle = "Old Title";
 		string newTitle = "New Title";
 		Assignment assignment = new(oldTitle, "Description");
-		moqAssignment.Setup(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description)).Returns(true);
+		moqAssignment.Setup(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description, null)).Returns(true);
 
 		ConsoleUI consoleUI = new(moqAssignment.Object);
 
 		bool result = moqAssignment.Object.UpdateAssigment(oldTitle, newTitle, assignment.Description);
 
 		Assert.True(result);
-		moqAssignment.Verify(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description), Times.Once);
+		moqAssignment.Verify(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description, null), Times.Once);
 	}
 
 	[Fact]
@@ -338,11 +339,11 @@ public class ConsoleUITests
 	[Fact]
 	public void Run_Input6_ShouldCallUpdateAssignment()
 	{
-		using (StringReader reader = new($"6\nGood\nBad\nUgly\n0"))
+		using (StringReader reader = new($"6\nGood\nBad\nUgly\n\n0"))
 		{
 			Mock<IAssignmentService> moqService = new();
 			moqService.Setup(s => s
-				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()))
 				.Returns(true);
 			
 			ConsoleUI console = new(moqService.Object);
@@ -353,18 +354,18 @@ public class ConsoleUITests
 
 			Assert.False(console.isRunning);
 			moqService.Verify(s => s
-				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()), Times.Once);
 		}
 	}
 	[Fact]
 	public void Run_Input6_WithBadData_ShouldSayUpdateFailed()
 	{
 		using (StringWriter writer = new())
-		using (StringReader reader = new($"6\nBad data\nBad data\nBad data\n0"))
+		using (StringReader reader = new($"6\nBad data\nBad data\nBad data\n\n0"))
 		{
 			Mock<IAssignmentService> moqService = new();
 			moqService.Setup(s => s
-				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()))
 				.Returns(false);
 			ConsoleUI console = new(moqService.Object);
 

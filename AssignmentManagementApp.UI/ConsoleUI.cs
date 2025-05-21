@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using AssignmentLibrary;
 using AssignmentLibrary.Interfaces;
+using static AssignmentLibrary.Enumerations;
 
 namespace AssignmentManagementApp.UI;
 
@@ -144,8 +145,10 @@ Assignment Manager Menu:
 		string enteredOldTitle = CustomConsole.ReadInput("Enter the current title of the Assignment: ");
 		string enteredNewTitle = CustomConsole.ReadInput("Enter the new title of the Assignment: ");
 		string enteredNewDescription = CustomConsole.ReadInput("Enter the new description of the Assignment: ");
+		string enteredNewPriority = CustomConsole.ReadInputOnlyAllowed("Available Options: 1. (VL)Very Low 2. (L)ow 3. (M)edium 4. (H)igh 5.(XH)Extra High, or leave empty to leave unchanged\nEnter new priority: ", ["", "1", "2", "3", "4", "5", "vl", "l", "m", "h", "xh", "extra low", "low", "medium", "high", "extra high"]);
 
-		if (_assignmentService.UpdateAssigment(enteredOldTitle, enteredNewTitle, enteredNewDescription))
+
+		if (_assignmentService.UpdateAssigment(enteredOldTitle, enteredNewTitle, enteredNewDescription, PriorityFromString(enteredNewPriority)))
 		{
 			CustomConsole.WriteSuccess($"Assignment Updated Successfully. {enteredOldTitle} -> {enteredNewTitle}");
 		}
@@ -213,6 +216,19 @@ public static class CustomConsole
 			Console.WriteLine();
 		}
 
+		return input;
+	}
+
+	public static string ReadInputOnlyAllowed(string promptmessage, string[] availableinputs)
+	{
+		string input = "";
+
+		do
+		{
+			WriteInfo(promptmessage);
+			input = Console.ReadLine() ?? "";
+			Console.WriteLine();
+		} while (!availableinputs.Contains(input.ToLower()));
 		return input;
 	}
 }
