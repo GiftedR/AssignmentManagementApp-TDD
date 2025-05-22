@@ -20,7 +20,7 @@ public class AssignmentFormatterTests
         AssignmentFormatter formatter = new();
         string expectedFormat;
 
-        expectedFormat = $"[{formattingAssignment.Id}] {formattingAssignment.Title} - {(formattingAssignment.IsCompleted ? "Completed" : "Incomplete")}";
+        expectedFormat = $"{formatter.StringFromAssignmentPriority(formattingAssignment.Priority)}: [{formattingAssignment.Id}] {formattingAssignment.Title} - {(formattingAssignment.IsCompleted ? "Completed" : "Incomplete")}";
     
         Assert.Equal(expectedFormat, formatter.Format(formattingAssignment));
     }
