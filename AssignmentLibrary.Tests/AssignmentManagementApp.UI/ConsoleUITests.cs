@@ -11,80 +11,80 @@ public class ConsoleUITests
 	[Fact]
 	public void AddAssignment_ShouldCallAddAssignmentInAssignmentService()
 	{
-		Mock<IAssignmentService> moqAssignment = new();
+		Mock<IAssignmentService> moqAssignmentService = new();
 		Assignment assignment = new("Lab 4", "Do thing with thing (:");
-		ConsoleUI consoleUI = new(moqAssignment.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object);
 
-		moqAssignment.Object.AddAssignment(assignment);
+		moqAssignmentService.Object.AddAssignment(assignment);
 
-		moqAssignment.Verify(service => service.AddAssignment(assignment), Times.Once);
+		moqAssignmentService.Verify(service => service.AddAssignment(assignment), Times.Once);
 	}
 
 	[Fact]
 	public void DeleteAssignment_ShouldReturnTrueIfExists()
 	{
-		Mock<IAssignmentService> moqAssignment = new();
+		Mock<IAssignmentService> moqAssignmentService = new();
 		string titleToDelete = "Cool Task (:";
 		
-		moqAssignment.Setup(service => service.DeleteAssignment(titleToDelete)).Returns(true);
+		moqAssignmentService.Setup(service => service.DeleteAssignment(titleToDelete)).Returns(true);
 
-		ConsoleUI consoleUI = new(moqAssignment.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object);
 
-		bool result = moqAssignment.Object.DeleteAssignment(titleToDelete);
+		bool result = moqAssignmentService.Object.DeleteAssignment(titleToDelete);
 		
 		Assert.True(result);
-		moqAssignment.Verify(service => service.DeleteAssignment(titleToDelete), Times.Once);
+		moqAssignmentService.Verify(service => service.DeleteAssignment(titleToDelete), Times.Once);
 	}
 
 	[Fact]
 	public void FindByTitle_ShouldReturnFoundAssignmentWithSameTitle()
 	{
-		Mock<IAssignmentService> moqAssignment = new();
+		Mock<IAssignmentService> moqAssignmentService = new();
 		string titleToSearch = "Cool Title (:";
 		Assignment assignmentToFind = new(titleToSearch, "Cool Description");
 		
-		moqAssignment.Setup(service => service.FindAssignmentByTitle(titleToSearch)).Returns(assignmentToFind);
+		moqAssignmentService.Setup(service => service.FindAssignmentByTitle(titleToSearch)).Returns(assignmentToFind);
 		
-		ConsoleUI consoleUI = new(moqAssignment.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object);
 
-		Assignment? foundAssignment = moqAssignment.Object.FindAssignmentByTitle(titleToSearch);
+		Assignment? foundAssignment = moqAssignmentService.Object.FindAssignmentByTitle(titleToSearch);
 
 		Assert.NotNull(foundAssignment);
 		Assert.Equal(titleToSearch, foundAssignment.Title);
-		moqAssignment.Verify(service => service.FindAssignmentByTitle(titleToSearch), Times.Once);
+		moqAssignmentService.Verify(service => service.FindAssignmentByTitle(titleToSearch), Times.Once);
 	}
 
 	[Fact]
 	public void UpdateAssigment_ShouldReturnTrue_WhenAssignmentIsUpdated()
 	{
-		Mock<IAssignmentService> moqAssignment = new();
+		Mock<IAssignmentService> moqAssignmentService = new();
 		string oldTitle = "Old Title";
 		string newTitle = "New Title";
 		Assignment assignment = new(oldTitle, "Description");
-		moqAssignment.Setup(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description, null)).Returns(true);
+		moqAssignmentService.Setup(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description, null)).Returns(true);
 
-		ConsoleUI consoleUI = new(moqAssignment.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object);
 
-		bool result = moqAssignment.Object.UpdateAssigment(oldTitle, newTitle, assignment.Description);
+		bool result = moqAssignmentService.Object.UpdateAssigment(oldTitle, newTitle, assignment.Description);
 
 		Assert.True(result);
-		moqAssignment.Verify(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description, null), Times.Once);
+		moqAssignmentService.Verify(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description, null), Times.Once);
 	}
 
 	[Fact]
 	public void DeleteAssignment_ShouldReturnTrue_WhenAssignmentIsDeleted()
 	{
-		Mock<IAssignmentService> moqAssignment = new();
+		Mock<IAssignmentService> moqAssignmentService = new();
 		string assignmentTitle = "Delete Me";
 		Assignment assignment = new(assignmentTitle, "Description");
-		moqAssignment.Setup(service => service.DeleteAssignment(assignmentTitle)).Returns(true);
+		moqAssignmentService.Setup(service => service.DeleteAssignment(assignmentTitle)).Returns(true);
 
-		ConsoleUI consoleUI = new(moqAssignment.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object);
 
-		bool result = moqAssignment.Object.DeleteAssignment(assignmentTitle);
+		bool result = moqAssignmentService.Object.DeleteAssignment(assignmentTitle);
 
 		Assert.True(result);
-		moqAssignment.Verify(service => service.DeleteAssignment(assignmentTitle), Times.Once);
+		moqAssignmentService.Verify(service => service.DeleteAssignment(assignmentTitle), Times.Once);
 	}
 #region Run Tests
 	[Fact]
@@ -92,8 +92,8 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new("0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			ConsoleUI console = new(moqService.Object);
+			Mock<IAssignmentService> moqAssignmentService = new();
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
@@ -110,19 +110,19 @@ public class ConsoleUITests
 		Assignment assignment = new(title, description);
 		using (StringReader reader = new($"1\n{title}\n{description}\n\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.AddAssignment(It.IsAny<Assignment>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.AddAssignment(It.IsAny<Assignment>()), Times.Once);
 		}
 	}
@@ -135,12 +135,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"1\n{title}\n{description}\n\n0"))
 		using (StringWriter writer = new())
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.AddAssignment(It.IsAny<Assignment>()))
 				.Returns(false);
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -161,19 +161,19 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"2\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.ListAll())
 				.Returns(new List<Assignment>());
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.ListAll(), Times.Once);
 		}
 	}
@@ -182,21 +182,21 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"2\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.ListAll())
 				.Returns(new List<Assignment>(){
 					new Assignment("Cool", "Beans")
 				});
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.ListAll(), Times.Once);
 		}
 	}
@@ -205,19 +205,19 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"3\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.ListIncomplete())
 				.Returns(new List<Assignment>());
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.ListIncomplete(), Times.Once);
 		}
 	}
@@ -226,21 +226,21 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"3\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.ListIncomplete())
 				.Returns(new List<Assignment>(){
 					new Assignment("Cool", "Beans")
 				});
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.ListIncomplete(), Times.Once);
 		}
 	}
@@ -249,19 +249,19 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"4\nTest\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.MarkAssignmentComplete(It.IsAny<string>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.MarkAssignmentComplete(It.IsAny<string>()), Times.Once);
 		}
 	}
@@ -271,11 +271,11 @@ public class ConsoleUITests
 		using (StringWriter writer = new())
 		using (StringReader reader = new($"4\nBad data\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.MarkAssignmentComplete(It.IsAny<string>())
 				).Returns(false);
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -295,19 +295,19 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"5\nTest\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.FindAssignmentByTitle(It.IsAny<string>()))
 				.Returns(new Assignment("True", "False"));
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.FindAssignmentByTitle(It.IsAny<string>()), Times.Once);
 		}
 	}
@@ -317,11 +317,11 @@ public class ConsoleUITests
 		using (StringWriter writer = new())
 		using (StringReader reader = new($"5\nBad data\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.FindAssignmentByTitle(It.IsAny<string>())
 				).Verifiable();
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -341,19 +341,19 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"6\nGood\nBad\nUgly\n\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()), Times.Once);
 		}
 	}
@@ -363,11 +363,11 @@ public class ConsoleUITests
 		using (StringWriter writer = new())
 		using (StringReader reader = new($"6\nBad data\nBad data\nBad data\n\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()))
 				.Returns(false);
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -387,19 +387,19 @@ public class ConsoleUITests
 	{
 		using (StringReader reader = new($"7\nWeird\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.DeleteAssignment(It.IsAny<string>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			moqService.Verify(s => s
+			moqAssignmentService.Verify(s => s
 				.DeleteAssignment(It.IsAny<string>()), Times.Once);
 		}
 	}
@@ -409,11 +409,11 @@ public class ConsoleUITests
 		using (StringWriter writer = new())
 		using (StringReader reader = new($"7\nBad data\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.DeleteAssignment(It.IsAny<string>()))
 				.Returns(false);
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -434,8 +434,8 @@ public class ConsoleUITests
 		using (StringReader reader = new($"13\n0"))
 		using (StringWriter writer = new())
 		{
-			Mock<IAssignmentService> moqService = new();
-			ConsoleUI console = new(moqService.Object);
+			Mock<IAssignmentService> moqAssignmentService = new();
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -458,11 +458,11 @@ public class ConsoleUITests
 		using (StringWriter writer = new())
 		using (StringReader reader = new($"1\nData\nData\n1\nData\nData\n0"))
 		{
-			Mock<IAssignmentService> moqService = new();
-			moqService.Setup(s => s
+			Mock<IAssignmentService> moqAssignmentService = new();
+			moqAssignmentService.Setup(s => s
 				.AddAssignment(It.IsAny<Assignment>())
 				).Throws(new Exception("Test Exception"));
-			ConsoleUI console = new(moqService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
