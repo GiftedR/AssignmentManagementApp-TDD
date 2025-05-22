@@ -8,11 +8,13 @@ namespace AssignmentManagementApp.UI;
 public class ConsoleUI
 {
 	private IAssignmentService _assignmentService;
+	private IAssignmentFormatter _assignmentFormatter;
 	public bool isRunning = true;
 
-	public ConsoleUI(IAssignmentService assignmentservice)
+	public ConsoleUI(IAssignmentService assignmentservice, IAssignmentFormatter assignmentFormatter)
 	{
 		_assignmentService = assignmentservice;
+		_assignmentFormatter = assignmentFormatter;
 	}
 
 	public void Run()
@@ -77,7 +79,7 @@ Assignment Manager Menu:
 		
 		try
 		{
-			Assignment assi = new(title, description, PriorityFromString(enteredNewPriority) ?? Priority.Medium);
+			Assignment assi = new(title, description, _assignmentFormatter.AssignmentPriorityFromString(enteredNewPriority) ?? Priority.Medium);
 			if (_assignmentService.AddAssignment(assi))
 			{
 				CustomConsole.WriteSuccess("Assignment Added!");
@@ -150,7 +152,7 @@ Assignment Manager Menu:
 		string enteredNewPriority = CustomConsole.ReadInputOnlyAllowed("Available Options: 1. (VL)Very Low 2. (L)ow 3. (M)edium 4. (H)igh 5.(XH)Extra High, or leave empty to leave unchanged\nEnter new priority: ", ["", "1", "2", "3", "4", "5", "vl", "l", "m", "h", "xh", "extra low", "low", "medium", "high", "extra high"]);
 
 
-		if (_assignmentService.UpdateAssigment(enteredOldTitle, enteredNewTitle, enteredNewDescription, PriorityFromString(enteredNewPriority)))
+		if (_assignmentService.UpdateAssigment(enteredOldTitle, enteredNewTitle, enteredNewDescription, _assignmentFormatter.AssignmentPriorityFromString(enteredNewPriority)))
 		{
 			CustomConsole.WriteSuccess($"Assignment Updated Successfully. {enteredOldTitle} -> {enteredNewTitle}");
 		}
