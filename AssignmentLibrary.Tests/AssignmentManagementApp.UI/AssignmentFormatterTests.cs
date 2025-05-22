@@ -42,6 +42,7 @@ public class AssignmentFormatterTests
 	[InlineData("5", Priority.ExtraHigh)]
 	[InlineData("xh", Priority.ExtraHigh)]
 	[InlineData("extra high", Priority.ExtraHigh)]
+	[InlineData("this should return null", null)]
 	public void AssignmentPriorityFromString_ShouldReturnExpectedOutput(string formatinput, Priority? expectedoutput)
 	{
 		AssignmentFormatter formatter = new();
@@ -51,10 +52,10 @@ public class AssignmentFormatterTests
 
 	[Theory]
 	[InlineData(Priority.VeryLow, "Very Low")]
-	[InlineData(Priority.Low, "Very Low")]
-	[InlineData(Priority.Medium, "Very Low")]
-	[InlineData(Priority.High, "Very Low")]
-	[InlineData(Priority.ExtraHigh, "Very Low")]
+	[InlineData(Priority.Low, "Low")]
+	[InlineData(Priority.Medium, "Medium")]
+	[InlineData(Priority.High, "High")]
+	[InlineData(Priority.ExtraHigh, "Extra High")]
 	[InlineData((Priority)300, "Unknown")]
 	public void StringFromAssignmentPriority_ShouldReturnExpectedOutput(Priority inputpriority, string expectedoutput)
 	{
