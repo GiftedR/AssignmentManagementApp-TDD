@@ -18,7 +18,7 @@ public class AssignmentFormatter : IAssignmentFormatter
 
 	public string Format(Assignment assignment)
 	{
-		return $"[{assignment.Id}] {assignment.Title} - {(assignment.IsCompleted ? "Completed" : "Incomplete")}";
+		return $"{StringFromAssignmentPriority(assignment.Priority)}: [{assignment.Id}] {assignment.Title} - {(assignment.IsCompleted ? "Completed" : "Incomplete")}";
 	}
 
 	public string StringFromAssignmentPriority(Priority priority) => priority switch
