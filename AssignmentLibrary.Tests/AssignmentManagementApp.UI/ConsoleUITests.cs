@@ -12,8 +12,9 @@ public class ConsoleUITests
 	public void AddAssignment_ShouldCallAddAssignmentInAssignmentService()
 	{
 		Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 		Assignment assignment = new("Lab 4", "Do thing with thing (:");
-		ConsoleUI consoleUI = new(moqAssignmentService.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 		moqAssignmentService.Object.AddAssignment(assignment);
 
@@ -24,11 +25,12 @@ public class ConsoleUITests
 	public void DeleteAssignment_ShouldReturnTrueIfExists()
 	{
 		Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 		string titleToDelete = "Cool Task (:";
 		
 		moqAssignmentService.Setup(service => service.DeleteAssignment(titleToDelete)).Returns(true);
 
-		ConsoleUI consoleUI = new(moqAssignmentService.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 		bool result = moqAssignmentService.Object.DeleteAssignment(titleToDelete);
 		
@@ -40,12 +42,13 @@ public class ConsoleUITests
 	public void FindByTitle_ShouldReturnFoundAssignmentWithSameTitle()
 	{
 		Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 		string titleToSearch = "Cool Title (:";
 		Assignment assignmentToFind = new(titleToSearch, "Cool Description");
 		
 		moqAssignmentService.Setup(service => service.FindAssignmentByTitle(titleToSearch)).Returns(assignmentToFind);
 		
-		ConsoleUI consoleUI = new(moqAssignmentService.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 		Assignment? foundAssignment = moqAssignmentService.Object.FindAssignmentByTitle(titleToSearch);
 
@@ -58,12 +61,13 @@ public class ConsoleUITests
 	public void UpdateAssigment_ShouldReturnTrue_WhenAssignmentIsUpdated()
 	{
 		Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 		string oldTitle = "Old Title";
 		string newTitle = "New Title";
 		Assignment assignment = new(oldTitle, "Description");
 		moqAssignmentService.Setup(service => service.UpdateAssigment(oldTitle, newTitle, assignment.Description, null)).Returns(true);
 
-		ConsoleUI consoleUI = new(moqAssignmentService.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 		bool result = moqAssignmentService.Object.UpdateAssigment(oldTitle, newTitle, assignment.Description);
 
@@ -75,11 +79,12 @@ public class ConsoleUITests
 	public void DeleteAssignment_ShouldReturnTrue_WhenAssignmentIsDeleted()
 	{
 		Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 		string assignmentTitle = "Delete Me";
 		Assignment assignment = new(assignmentTitle, "Description");
 		moqAssignmentService.Setup(service => service.DeleteAssignment(assignmentTitle)).Returns(true);
 
-		ConsoleUI consoleUI = new(moqAssignmentService.Object);
+		ConsoleUI consoleUI = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 		bool result = moqAssignmentService.Object.DeleteAssignment(assignmentTitle);
 
@@ -93,7 +98,8 @@ public class ConsoleUITests
 		using (StringReader reader = new("0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
-			ConsoleUI console = new(moqAssignmentService.Object);
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -111,11 +117,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"1\n{title}\n{description}\n\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.AddAssignment(It.IsAny<Assignment>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -136,11 +143,12 @@ public class ConsoleUITests
 		using (StringWriter writer = new())
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.AddAssignment(It.IsAny<Assignment>()))
 				.Returns(false);
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -162,11 +170,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"2\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.ListAll())
 				.Returns(new List<Assignment>());
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -183,13 +192,14 @@ public class ConsoleUITests
 		using (StringReader reader = new($"2\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.ListAll())
 				.Returns(new List<Assignment>(){
 					new Assignment("Cool", "Beans")
 				});
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -206,11 +216,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"3\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.ListIncomplete())
 				.Returns(new List<Assignment>());
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -227,13 +238,14 @@ public class ConsoleUITests
 		using (StringReader reader = new($"3\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.ListIncomplete())
 				.Returns(new List<Assignment>(){
 					new Assignment("Cool", "Beans")
 				});
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -250,11 +262,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"4\nTest\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.MarkAssignmentComplete(It.IsAny<string>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -272,10 +285,11 @@ public class ConsoleUITests
 		using (StringReader reader = new($"4\nBad data\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.MarkAssignmentComplete(It.IsAny<string>())
 				).Returns(false);
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -296,11 +310,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"5\nTest\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.FindAssignmentByTitle(It.IsAny<string>()))
 				.Returns(new Assignment("True", "False"));
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -318,10 +333,11 @@ public class ConsoleUITests
 		using (StringReader reader = new($"5\nBad data\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.FindAssignmentByTitle(It.IsAny<string>())
 				).Verifiable();
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -342,11 +358,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"6\nGood\nBad\nUgly\n\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -364,10 +381,11 @@ public class ConsoleUITests
 		using (StringReader reader = new($"6\nBad data\nBad data\nBad data\n\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.UpdateAssigment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Priority?>()))
 				.Returns(false);
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -388,11 +406,12 @@ public class ConsoleUITests
 		using (StringReader reader = new($"7\nWeird\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.DeleteAssignment(It.IsAny<string>()))
 				.Returns(true);
 			
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 
@@ -410,10 +429,11 @@ public class ConsoleUITests
 		using (StringReader reader = new($"7\nBad data\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.DeleteAssignment(It.IsAny<string>()))
 				.Returns(false);
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -435,7 +455,8 @@ public class ConsoleUITests
 		using (StringWriter writer = new())
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
-			ConsoleUI console = new(moqAssignmentService.Object);
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
@@ -459,10 +480,11 @@ public class ConsoleUITests
 		using (StringReader reader = new($"1\nData\nData\n1\nData\nData\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
+		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
 			moqAssignmentService.Setup(s => s
 				.AddAssignment(It.IsAny<Assignment>())
 				).Throws(new Exception("Test Exception"));
-			ConsoleUI console = new(moqAssignmentService.Object);
+			ConsoleUI console = new(moqAssignmentService.Object, moqAssignmentFormatter.Object);
 
 			Console.SetIn(reader);
 			Console.SetOut(writer);
