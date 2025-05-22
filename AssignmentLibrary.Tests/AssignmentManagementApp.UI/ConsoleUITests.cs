@@ -108,7 +108,7 @@ public class ConsoleUITests
 		const string title = "Called Title Here";
 		const string description = "Called Description Here";
 		Assignment assignment = new(title, description);
-		using (StringReader reader = new($"1\n{title}\n{description}\n0"))
+		using (StringReader reader = new($"1\n{title}\n{description}\n\n0"))
 		{
 			Mock<IAssignmentService> moqService = new();
 			moqService.Setup(s => s
@@ -132,7 +132,7 @@ public class ConsoleUITests
 		const string title = "Called Title Here";
 		const string description = "Called Description Here";
 		Assignment assignment = new(title, description);
-		using (StringReader reader = new($"1\n{title}\n{description}\n0"))
+		using (StringReader reader = new($"1\n{title}\n{description}\n\n0"))
 		using (StringWriter writer = new())
 		{
 			Mock<IAssignmentService> moqService = new();
