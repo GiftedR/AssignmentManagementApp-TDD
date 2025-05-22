@@ -75,7 +75,7 @@ Assignment Manager Menu:
 	{
 		string title = CustomConsole.ReadInput("Enter Assignment Title: ");
 		string description = CustomConsole.ReadInput("Enter Assignment Description: ");
-		string enteredNewPriority = CustomConsole.ReadInputOnlyAllowed("Available Options: 1. (VL)Very Low 2. (L)ow 3. (M)edium 4. (H)igh 5.(XH)Extra High, or leave empty to leave unchanged\nEnter new priority: ", ["", "1", "2", "3", "4", "5", "vl", "l", "m", "h", "xh", "extra low", "low", "medium", "high", "extra high"]);
+		string enteredNewPriority = CustomConsole.ReadInputOnlyAllowed("Available Options: 1. (VL)Very Low 2. (L)ow 3. (M)edium 4. (H)igh 5.(XH)Extra High, or leave empty to default\nEnter priority: ", ["", "1", "2", "3", "4", "5", "vl", "l", "m", "h", "xh", "extra low", "low", "medium", "high", "extra high"]);
 		
 		try
 		{
