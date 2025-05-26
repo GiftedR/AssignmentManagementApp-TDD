@@ -35,6 +35,18 @@ public class AssignmentTests
     }
 
     [Fact]
+    public void Constructor_ShouldAllowNoteInput()
+    {
+        Assignment assignment = new(
+            "Testing of the Notes",
+            "Cool note bro",
+            note: "Really Cool Notes Bro"
+        );
+
+        Assert.NotNull(assignment.Notes);
+    }
+
+    [Fact]
     public void Update_BlankDescription_ShouldThrowException()
     {
         var assignment = new Assignment("Read Chapter 2", "Summarize key points");
@@ -71,5 +83,16 @@ public class AssignmentTests
         expectString = $"[{assignment.Id}]: {assignment.Title}, {assignment.Description} (Completed: {assignment.IsCompleted})";
 
         Assert.Equal(expectString, assignment.ToString());
+    }
+
+    [Fact]
+    public void NotesProperty_ShouldBeOptionalString()
+    {
+        Assignment assignment = new(
+            "Testing of the Notes",
+            "Cool note bro"
+        );
+
+        Assert.IsType<string?>(assignment.Notes);
     }
 }
