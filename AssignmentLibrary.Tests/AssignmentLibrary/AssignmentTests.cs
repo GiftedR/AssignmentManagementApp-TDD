@@ -43,7 +43,7 @@ public class AssignmentTests
             note: "Really Cool Notes Bro"
         );
 
-        Assert.NotNull(assignment.Notes);
+        Assert.NotNull(assignment.Note);
     }
 
     [Fact]
@@ -93,6 +93,6 @@ public class AssignmentTests
             "Cool note bro"
         );
 
-        Assert.IsType<string?>(assignment.Notes);
+        Assert.IsType<string?>(assignment.Note);
     }
 }

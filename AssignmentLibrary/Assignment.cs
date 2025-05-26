@@ -9,17 +9,20 @@ public class Assignment
 	public string Description { get; private set; } = default!;
 	public bool IsCompleted { get; private set; }
 	public Priority Priority { get; private set; }
+	public string? Note { get; private set; }
 
-	public Assignment(string title, string description, Priority priority = Priority.Medium)
+	public Assignment(string title, string description, Priority priority = Priority.Medium, string? note = null)
 	{
 		Validate(title, nameof(title));
 		Validate(description, nameof(description));
 		Title = title;
 		Description = description;
 		Priority = priority;
+		if (note != null)
+			Note = note;
 	}
 
-	public void Update(string newtitle, string newdescription, Priority? newpriority = null)
+	public void Update(string newtitle, string newdescription, Priority? newpriority = null, string? newnote = null)
 	{
 		Validate(newtitle, nameof(newtitle));
 		Validate(newdescription, nameof(newdescription));
@@ -27,6 +30,8 @@ public class Assignment
 		Description = newdescription;
 		if (newpriority != null)
 			Priority = (Priority)newpriority;
+		if (newnote != null)
+			Note = newnote;
 	}
 
 	private void Validate(string input, string fieldName)
