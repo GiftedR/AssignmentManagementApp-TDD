@@ -93,6 +93,6 @@ public class AssignmentTests
             "Cool note bro"
         );
 
-        Assert.IsType<string?>(assignment.Note);
+        Assert.Null(assignment.Note);
     }
 }

@@ -18,7 +18,7 @@ public class Assignment
 		Title = title;
 		Description = description;
 		Priority = priority;
-		if (note != null)
+		if (!string.IsNullOrWhiteSpace(note))
 			Note = note;
 	}
 

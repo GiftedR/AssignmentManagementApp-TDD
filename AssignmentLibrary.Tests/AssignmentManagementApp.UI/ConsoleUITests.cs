@@ -135,23 +135,24 @@ public class ConsoleUITests
 	}
 	[Theory]
 	[InlineData("Cool title", "Cool Description")]
-	[InlineData("Cool title", "Cool Description 2", Priority.ExtraHigh, "This is the most important")]
-	public void Run_Input1_WithData_ShouldBuildAssignment(string assignmentTitle, string assignmentDescription, Priority? assignmentPriority = null, string? assignmentNote = null)
+	[InlineData("Cool title", "Cool Description 2", "h", "This is the most important")]
+	public void Run_Input1_WithData_ShouldBuildAssignment(string assignmentTitle, string assignmentDescription, string? assignmentPriority = null, string? assignmentNote = null)
 	{
 		// Assignment assignment = new(assignmentTitle, assignmentDescription, assignmentPriority, assignmentNote);
-		using (StringReader reader = new($"1\n{assignmentTitle}\n{assignmentDescription}\n{assignmentPriority}\n{assignmentNote}\n0"))
-		{
-			Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
-			AssignmentService assignmentService = new(moqAssignmentFormatter.Object, new ConsoleAppLogger());
+		AssignmentFormatter assignmentFormatter = new();
 
-			ConsoleUI console = new(assignmentService, moqAssignmentFormatter.Object);
+		using (StringReader reader = new($"1\n{assignmentTitle}\n{assignmentDescription}\n{(assignmentPriority ?? "")}\n{assignmentNote ?? ""}\n0"))
+		{
+			AssignmentService assignmentService = new(assignmentFormatter, new ConsoleAppLogger());
+
+			ConsoleUI console = new(assignmentService, assignmentFormatter);
 
 			Console.SetIn(reader);
 
 			console.Run();
 
 			Assert.False(console.isRunning);
-			Assert.Contains(assignmentService.ListAll(), (assi) => assi.Title == assignmentTitle && assi.Description == assignmentDescription && assi.Priority == assignmentPriority && assi.Note == assignmentNote);
+			Assert.Contains(assignmentService.ListAll(), (assi) => assi.Title == assignmentTitle && assi.Description == assignmentDescription && assi.Priority == assignmentFormatter.AssignmentPriorityFromString(assignmentPriority ?? "m") && assi.Note == assignmentNote);
 		}
 	}
 	[Fact]

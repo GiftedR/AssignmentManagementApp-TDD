@@ -7,5 +7,5 @@ public interface IAssignmentFormatter
 {
 	public string Format(Assignment assignment);
 	public Priority? AssignmentPriorityFromString(string prioritymessage);
-	public string StringFromAssignmentPriority(Priority priority);
+	public string StringFromAssignmentPriority(Priority? priority);
 }
