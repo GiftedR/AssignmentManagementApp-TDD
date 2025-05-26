@@ -114,7 +114,7 @@ public class ConsoleUITests
 		const string title = "Called Title Here";
 		const string description = "Called Description Here";
 		Assignment assignment = new(title, description);
-		using (StringReader reader = new($"1\n{title}\n{description}\n\n0"))
+		using (StringReader reader = new($"1\n{title}\n{description}\n\n\n0"))
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();
 		Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
@@ -133,13 +133,34 @@ public class ConsoleUITests
 				.AddAssignment(It.IsAny<Assignment>()), Times.Once);
 		}
 	}
+	[Theory]
+	[InlineData("Cool title", "Cool Description")]
+	[InlineData("Cool title", "Cool Description 2", Priority.ExtraHigh, "This is the most important")]
+	public void Run_Input1_WithData_ShouldBuildAssignment(string assignmentTitle, string assignmentDescription, Priority? assignmentPriority = null, string? assignmentNote = null)
+	{
+		// Assignment assignment = new(assignmentTitle, assignmentDescription, assignmentPriority, assignmentNote);
+		using (StringReader reader = new($"1\n{assignmentTitle}\n{assignmentDescription}\n{assignmentPriority}\n{assignmentNote}\n0"))
+		{
+			Mock<IAssignmentFormatter> moqAssignmentFormatter = new();
+			AssignmentService assignmentService = new(moqAssignmentFormatter.Object, new ConsoleAppLogger());
+
+			ConsoleUI console = new(assignmentService, moqAssignmentFormatter.Object);
+
+			Console.SetIn(reader);
+
+			console.Run();
+
+			Assert.False(console.isRunning);
+			Assert.Contains(assignmentService.ListAll(), (assi) => assi.Title == assignmentTitle && assi.Description == assignmentDescription && assi.Priority == assignmentPriority && assi.Note == assignmentNote);
+		}
+	}
 	[Fact]
 	public void Run_Input1_WithInvalidAssignment_ShouldShowMessage()
 	{
 		const string title = "Called Title Here";
 		const string description = "Called Description Here";
 		Assignment assignment = new(title, description);
-		using (StringReader reader = new($"1\n{title}\n{description}\n\n0"))
+		using (StringReader reader = new($"1\n{title}\n{description}\n\n\n0"))
 		using (StringWriter writer = new())
 		{
 			Mock<IAssignmentService> moqAssignmentService = new();

@@ -9,19 +9,20 @@ public class AssignmentFormatterTests
 	[Theory]
 	[InlineData("Title", "Description")]
 	[InlineData("Different Title", "Different Description")]
-	[InlineData("Make thing", "Create a world")]
+	[InlineData("Make thing", "Create a world", "Big ol project")]
 	[InlineData("Create program", "Build application")]
-	[InlineData("Build Software", "Archetecture go brrrr")]
-	public void Format_ShouldProperlyFormatFilledAssignment(string formattitle, string formatdescription)
+	[InlineData("Build Software", "Archetecture go brrrr", "Better than crashing")]
+	public void Format_ShouldProperlyFormatFilledAssignment(string formattitle, string formatdescription, string? formatnote = null)
 	{
 		Assignment formattingAssignment = new(
 			formattitle,
-			formatdescription
+			formatdescription,
+			note: formatnote
 		);
 		AssignmentFormatter formatter = new();
 		string expectedFormat;
 
-		expectedFormat = $"{formatter.StringFromAssignmentPriority(formattingAssignment.Priority)}: [{formattingAssignment.Id}] {formattingAssignment.Title} - {(formattingAssignment.IsCompleted ? "Completed" : "Incomplete")}";
+		expectedFormat = $"{formatter.StringFromAssignmentPriority(formattingAssignment.Priority)}: [{formattingAssignment.Id}] {formattingAssignment.Title} - {(formattingAssignment.IsCompleted ? "Completed" : "Incomplete")}\nNote:{(formattingAssignment.Note ?? "None" )}";
 
 		Assert.Equal(expectedFormat, formatter.Format(formattingAssignment));
 	}
