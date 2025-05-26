@@ -25,3 +25,6 @@ When building tests for the console, if the input was invalid, it would get stuc
 ![Test Passing and Code Coverage](Documentation/Week6/TestCoverage.png)
 
 ---
+
+### Week 7
+[Developer Notes](DeveloperNotes.txt)

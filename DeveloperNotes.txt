@@ -1,0 +1,26 @@
+Student Name: Colton Staggs
+Date Submitted: 5/25/25
+
+---
+PURPOSE OF CHANGE:
+The purpose of this change was to add optional notes to assignments.
+
+---
+SUMMARY OF CHANGES:
+- Added Notes Parameter to Assignment
+- Added Notes field when Creating Assignments in ConsoleUI.cs
+- Added Notes display to AssignmentFormatter or Display None when there is no notes
+- Methods updated or added
+
+---
+TDD PROCESS USED:
+Built basic tests for creation of the note on assignments, and made sure the property could be null
+
+---
+CHALLENGES OR DESIGN DECISIONS:
+Formatter note field is on seperate line for ease of reading
+
+---
+NEXT STEPS OR RECOMMENDATIONS:
+- Add Multiple Note storage on a Single Assignment
+- Add Note parameter to Update (This request did not ask for it)
