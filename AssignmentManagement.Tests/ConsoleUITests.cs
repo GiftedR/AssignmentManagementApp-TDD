@@ -18,10 +18,12 @@ namespace AssignmentManagement.Tests
             var ui = new ConsoleUI(mock.Object);
 
             // Correct input: choose menu option 1, enter title, enter description, then exit
-            using var input = new StringReader("1\nSample Title\nSample Description\n0\n");
-            System.Console.SetIn(input);
+            using (var addAssignmentInput = new StringReader("1\nSample Title\nSample Description\n0\n"))
+            {
+                System.Console.SetIn(addAssignmentInput);
 
-            ui.Run();
+                ui.Run();
+            }
 
             mock.Verify(s => s.AddAssignment(It.Is<Assignment>(a =>
                 a.Title == "Sample Title" &&
@@ -39,10 +41,12 @@ namespace AssignmentManagement.Tests
 
             var ui = new ConsoleUI(mock.Object);
 
-            using var input = new StringReader("4\nSample\n0\n");
-            System.Console.SetIn(input);
+            using (var searchAssignmentInput = new StringReader("4\nSample\n0\n"))
+            {
+                System.Console.SetIn(searchAssignmentInput);
 
-            ui.Run();
+                ui.Run();
+            }
 
             mock.Verify(s => s.FindByTitle("Sample"), Times.Once);
         }
@@ -55,9 +59,9 @@ namespace AssignmentManagement.Tests
 
             var ui = new ConsoleUI(mock.Object);
 
-            using (var input = new StringReader("7\nToDelete\n0\n"))
+            using (var deleteAssignmentInput = new StringReader("7\nToDelete\n0\n"))
             {
-                System.Console.SetIn(input);
+                System.Console.SetIn(deleteAssignmentInput);
 
                 ui.Run();
             }
