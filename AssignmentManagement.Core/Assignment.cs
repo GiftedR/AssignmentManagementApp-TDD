@@ -13,7 +13,11 @@ namespace AssignmentManagement.Core
 
         public Assignment(string title, string description, DateTime? dueDate = null, AssignmentPriority priority = AssignmentPriority.Medium, string notes = "")
         {
+            if (string.IsNullOrEmpty(title))
+                throw new ArgumentException("Title cannot be null or empty!");
             Title = title;
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentException("Description cannot be null or empty!");
             Description = description;
             DueDate = dueDate;
             Priority = priority;
