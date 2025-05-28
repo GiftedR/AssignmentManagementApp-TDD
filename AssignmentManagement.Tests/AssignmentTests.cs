@@ -48,5 +48,30 @@
 
             Assert.Contains(assignment.Notes, assignment.ToString());
         }
+
+        [Fact]
+        public void IsOverdue_WithNoDueDate_ShouldReturnFalse()
+        {
+            var assignment = new Assignment("Extra Credit", "Due at the end of the quarter");
+
+            Assert.False(assignment.IsOverdue());
+        }
+
+        [Fact]
+        public void IsOverdue_WithPastDueDate_ShouldReturnTrue()
+        {
+            var assignment = new Assignment("First Assignment", "Assignment to keep you enrolled in the class", new DateTime(2025, 4, 19, 23, 59, 59));
+
+            Assert.True(assignment.IsOverdue());
+        }
+
+        [Fact]
+        public void IsOverdue_WithIsComplete_ShouldReturnFalse()
+        {
+            var assignment = new Assignment("First Assignment", "Assignment to keep you enrolled in the class", new DateTime(2025, 6, 16, 23, 59, 59));
+            assignment.MarkComplete();
+
+            Assert.False(assignment.IsOverdue());
+        }
     }
 }

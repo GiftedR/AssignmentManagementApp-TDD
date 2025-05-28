@@ -38,7 +38,14 @@ namespace AssignmentManagement.Core
 
         public bool IsOverdue()
         {
-            return DueDate.Value < DateTime.Now; // BUG: no null check, ignores IsCompleted
+            if (DueDate == null || IsCompleted)
+            {
+                return false;
+            }
+            else
+            {
+                return DueDate.Value < DateTime.Now;
+            }
         }
 
         public override string ToString()
