@@ -13,11 +13,9 @@ namespace AssignmentManagement.Core
 
         public Assignment(string title, string description, DateTime? dueDate = null, AssignmentPriority priority = AssignmentPriority.Medium, string notes = "")
         {
-            if (string.IsNullOrEmpty(title))
-                throw new ArgumentException("Title cannot be null or empty!");
+            ValidateStringParameter(title, nameof(title));
             Title = title;
-            if (string.IsNullOrEmpty(description))
-                throw new ArgumentException("Description cannot be null or empty!");
+            ValidateStringParameter(description, nameof(description));
             Description = description;
             DueDate = dueDate;
             Priority = priority;
@@ -27,7 +25,9 @@ namespace AssignmentManagement.Core
 
         public void Update(string newTitle, string newDescription)
         {
+            ValidateStringParameter(newTitle, nameof(newTitle));
             Title = newTitle;
+            ValidateStringParameter(newDescription, nameof(newDescription));
             Description = newDescription;
         }
 
@@ -45,6 +45,12 @@ namespace AssignmentManagement.Core
         {
             return $"- {Title} ({Priority}) due {DueDate?.ToShortDateString() ?? "N/A"}\n{Description}";
             // BUG: Notes not included in output
+        }
+
+        private static void ValidateStringParameter(string? stringParameter, string parameterName)
+        {
+            if (string.IsNullOrEmpty(stringParameter))
+                throw new ArgumentException($"{parameterName} cannot be null or empty!");
         }
     }
 
