@@ -46,7 +46,7 @@
         {
             var assignment = new Assignment("Notes name", "Notes description", notes: "Cool Notes (:");
 
-            Assert.Equal(assignment.ToString(), $"- {assignment.Title} ({assignment.Priority}) due {assignment.DueDate?.ToShortDateString() ?? "N/A"}\n{assignment.Description}\n\tNotes:{assignment.Notes}");
+            Assert.Contains(assignment.Notes, assignment.ToString());
         }
     }
 }

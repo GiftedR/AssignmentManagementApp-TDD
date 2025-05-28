@@ -43,7 +43,7 @@ namespace AssignmentManagement.Core
 
         public override string ToString()
         {
-            return $"- {Title} ({Priority}) due {DueDate?.ToShortDateString() ?? "N/A"}\n{Description}\n\tNotes:{Notes}";
+            return $"- {Title} ({Priority}) due {DueDate?.ToShortDateString() ?? "N/A"}\n{Description}\n\tNotes: {Notes}";
             // BUG: Notes not included in output
         }
 
