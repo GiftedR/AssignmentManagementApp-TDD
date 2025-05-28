@@ -17,7 +17,7 @@ namespace AssignmentManagement.Core
             Description = description;
             DueDate = dueDate;
             Priority = priority;
-            // BUG: Notes is not assigned
+            Notes = notes;
             IsCompleted = false;
         }
 
