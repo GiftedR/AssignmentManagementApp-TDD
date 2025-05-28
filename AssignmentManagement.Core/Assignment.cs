@@ -11,7 +11,7 @@ namespace AssignmentManagement.Core
         public bool IsCompleted { get; private set; }
         public string Notes { get; private set; }
 
-        public Assignment(string title, string description, DateTime? dueDate, AssignmentPriority priority, string notes = "")
+        public Assignment(string title, string description, DateTime? dueDate = null, AssignmentPriority priority = AssignmentPriority.Medium, string notes = "")
         {
             Title = title;
             Description = description;
