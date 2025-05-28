@@ -19,6 +19,14 @@
         }
 
         [Fact]
+        public void Constructor_WithNotes_ShouldStoreNotes()
+        {
+            var notesmessage = "See, arent these cool notes (:";
+            var assignment = new Assignment("Notes Assignment", "This is an assignment with notes", notes: notesmessage);
+
+            Assert.Equal(notesmessage, assignment.Notes);
+        }
+        [Fact]
         public void Update_BlankDescription_ShouldThrowException()
         {
             var assignment = new Assignment("Read Chapter 2", "Summarize key points");
@@ -32,5 +40,6 @@
             assignment.MarkComplete();
             Assert.True(assignment.IsCompleted);
         }
+
     }
 }
