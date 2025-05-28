@@ -82,6 +82,7 @@ namespace AssignmentManagement.Core
             if (assignment != null)
             {
                 assignment.MarkComplete();
+                _logger.Log($"Completed Assignment [{assignment.Id}]: {assignment.Title}");
                 return true;
             }
             return false;
