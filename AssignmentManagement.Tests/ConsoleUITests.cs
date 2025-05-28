@@ -36,19 +36,19 @@ namespace AssignmentManagement.Tests
         public void SearchAssignmentByTitle_Should_Display_Assignment()
         {
             var mock = new Mock<IAssignmentService>();
-            mock.Setup(s => s.FindByTitle("Sample"))
+            mock.Setup(s => s.FindAssignmentByTitle(It.IsAny<string>()))
                 .Returns(new Assignment("Sample", "Details"));
 
             var ui = new ConsoleUI(mock.Object);
 
-            using (var searchAssignmentInput = new StringReader("4\nSample\n0\n"))
+            using (var searchAssignmentInput = new StringReader("5\nSample\n0"))
             {
                 System.Console.SetIn(searchAssignmentInput);
 
                 ui.Run();
             }
 
-            mock.Verify(s => s.FindByTitle("Sample"), Times.Once);
+            mock.Verify(s => s.FindAssignmentByTitle(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]

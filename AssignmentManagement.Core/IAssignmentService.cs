@@ -8,7 +8,6 @@ namespace AssignmentManagement.Core
         List<Assignment> ListAll();
         List<Assignment> ListIncomplete();
         List<string> ListFormatted();
-        Assignment FindByTitle(string title);
         bool UpdateAssignment(string title, string newTitle, string newDescription);
         bool DeleteAssignment(string title);
         bool MarkComplete(string title);

@@ -49,11 +49,9 @@ namespace AssignmentManagement.Core
 
         public List<string> ListFormatted() => _assignments.Select(a => _formatter.Format(a)).ToList();
 
-        public Assignment FindByTitle(string title) => _assignments.FirstOrDefault(a => a.Title == title);
-
         public bool UpdateAssignment(string title, string newTitle, string newDescription)
         {
-            var assignment = FindByTitle(title);
+            var assignment = FindAssignmentByTitle(title);
             if (assignment != null)
             {
                 assignment.Update(newTitle, newDescription);
@@ -64,7 +62,7 @@ namespace AssignmentManagement.Core
 
         public bool MarkComplete(string title)
         {
-            var assignment = FindByTitle(title);
+            var assignment = FindAssignmentByTitle(title);
             if (assignment != null)
             {
                 assignment.MarkComplete();
