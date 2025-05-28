@@ -166,7 +166,16 @@ namespace AssignmentManagement.UI
 
         private void DeleteAssignment()
         {
-            // TODO: Implement UI for deleting assignment
+            Console.WriteLine("Enter the title of the assignment to delete:");
+            var deleteTitle = Console.ReadLine();
+            if (_assignmentService.DeleteAssignment(deleteTitle))
+            {
+                Console.WriteLine("Assignment delete successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Assignment not found or delete failed.");
+            }
         }
     }
 }

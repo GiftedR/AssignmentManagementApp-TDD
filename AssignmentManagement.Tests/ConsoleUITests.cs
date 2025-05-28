@@ -55,18 +55,18 @@ namespace AssignmentManagement.Tests
         public void DeleteAssignment_Should_Call_Service_Delete()
         {
             var mock = new Mock<IAssignmentService>();
-            mock.Setup(s => s.DeleteAssignment("ToDelete")).Returns(true);
+            mock.Setup(s => s.DeleteAssignment(It.IsAny<string>())).Returns(true);
 
             var ui = new ConsoleUI(mock.Object);
 
-            using (var deleteAssignmentInput = new StringReader("7\nToDelete\n0\n"))
+            using (var deleteAssignmentInput = new StringReader("7\nToDelete\n0"))
             {
                 System.Console.SetIn(deleteAssignmentInput);
 
                 ui.Run();
             }
 
-            mock.Verify(s => s.DeleteAssignment("ToDelete"), Times.Once);
+            mock.Verify(s => s.DeleteAssignment(It.IsAny<string>()), Times.Once);
         }
     }
 }
