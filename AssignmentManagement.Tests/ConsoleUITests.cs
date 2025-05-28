@@ -55,10 +55,12 @@ namespace AssignmentManagement.Tests
 
             var ui = new ConsoleUI(mock.Object);
 
-            using var input = new StringReader("6\nToDelete\n0\n");
-            System.Console.SetIn(input);
+            using (var input = new StringReader("7\nToDelete\n0\n"))
+            {
+                System.Console.SetIn(input);
 
-            ui.Run();
+                ui.Run();
+            }
 
             mock.Verify(s => s.DeleteAssignment("ToDelete"), Times.Once);
         }
