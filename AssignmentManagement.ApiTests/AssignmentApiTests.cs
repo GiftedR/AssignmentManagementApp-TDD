@@ -28,7 +28,7 @@ namespace AssignmentManagement.ApiTests
         public async Task CanCreateAssignment()
         {
             var assignment = new Assignment("Test Assignment", "This is a test assignment.");
-            var response = await _client.PostAsJsonAsync("/api/assignment", assignment);
+            var response = await _client.PostAsJsonAsync("/api/Assignment", assignment);
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         }
 
@@ -37,8 +37,8 @@ namespace AssignmentManagement.ApiTests
         {
             //create new assignment
             var assignment = new Assignment("Test2 Assignment", "This is a test assignment.");
-            await _client.PostAsJsonAsync("/api/assignment", assignment);
-            var response = await _client.GetAsync("/api/assignment");
+            await _client.PostAsJsonAsync("/api/Assignment", assignment);
+            var response = await _client.GetAsync("/api/Assignment");
             response.EnsureSuccessStatusCode();
 
             var assignments = await response.Content.ReadFromJsonAsync<List<Assignment>>();
