@@ -4,6 +4,9 @@ using static AssignmentLibrary.Enumerations;
 
 namespace AssignmentManagementApp.UI;
 
+/// <summary>
+/// Formats an assignment and its parts.
+/// </summary>
 public class AssignmentFormatter : IAssignmentFormatter
 {
 	public Priority? AssignmentPriorityFromString(string prioritymessage) => prioritymessage.ToLower() switch
@@ -18,7 +21,7 @@ public class AssignmentFormatter : IAssignmentFormatter
 
 	public string Format(Assignment assignment)
 	{
-		return $"{StringFromAssignmentPriority(assignment.Priority)}: [{assignment.Id}] {assignment.Title} - {(assignment.IsCompleted ? "Completed" : "Incomplete")}\nNote:{(assignment.Note ?? "None" )}";
+		return $"{StringFromAssignmentPriority(assignment.Priority)}: [{assignment.Id}] {assignment.Title} - {(assignment.IsCompleted ? "Completed" : "Incomplete")}\nNote:{(assignment.Note ?? "None")}";
 	}
 
 	public string StringFromAssignmentPriority(Priority? priority) => priority switch

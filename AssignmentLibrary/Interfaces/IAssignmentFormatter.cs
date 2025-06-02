@@ -4,7 +4,7 @@ using static AssignmentLibrary.Enumerations;
 namespace AssignmentLibrary.Interfaces;
 
 /// <summary>
-/// Used to format an Assignment and its parts.
+/// Provided as a template for formatting assignments.
 /// </summary>
 public interface IAssignmentFormatter
 {
