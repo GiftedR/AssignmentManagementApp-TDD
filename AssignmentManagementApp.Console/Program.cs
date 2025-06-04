@@ -13,6 +13,8 @@ class Program
 
         services.AddSingleton<IAssignmentFormatter, AssignmentFormatter>();
         services.AddSingleton<IAppLogger, ConsoleAppLogger>();
+        services.AddSingleton<IAppLogger, FileAppLogger>();
+        services.AddSingleton<ILoggerService, LoggerService>();
 		services.AddSingleton<IAssignmentService, AssignmentService>();
 		services.AddSingleton<ConsoleUI>();
 
