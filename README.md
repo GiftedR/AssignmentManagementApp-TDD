@@ -41,6 +41,7 @@ Anyone is free to contribute, just make a fork and pull request with the changes
 Bug reports can be submitted within the _Issues_ tab labeled in github.
 
 ## Planned Maintenance
+- Looking into reducing complexity of ConsoleUI.Run() as it has the highest complexity.
 - Better Organization of tests.
 - File saving for both logs and assignments.
     - Currently assignments are removed when the application closes.
