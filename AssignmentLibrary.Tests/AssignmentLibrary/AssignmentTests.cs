@@ -62,6 +62,15 @@ public class AssignmentTests
         Assert.Equal(Priority.High, assignment.Priority);
     }
     [Fact]
+    public void Update_NewNote_ShouldUpdateNote()
+    {
+        var assignment = new Assignment("Read Chapter 8", "Summarize key points");
+        assignment.Update("Read Chapter 8 & 9", "Summarize Both Chapters", null, "500 Word Minimum");
+
+        Assert.NotNull(assignment.Note);
+        Assert.Equal("500 Word Minimum", assignment.Note);
+    }
+    [Fact]
     public void MarkComplete_ShouldMarkCompleted()
     {
         var assignment = new Assignment("Week 3 TDD", "Introducing AssignmentService and Filtering with TDD");
