@@ -50,3 +50,7 @@ Bug reports can be submitted within the _Issues_ tab labeled in github.
 ### Not Planned
 - Test Documentation
     - Tests should be self explaining. I.E. The test name should explain exactly what the test is for.
+
+#### Notes to other Devs:
+- Separation of Console and ConsoleUI for cases where there is a custom console.
+- Color is used in custom console handler for clarity and easier reading, colors are optional
